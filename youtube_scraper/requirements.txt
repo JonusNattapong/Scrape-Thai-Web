@@ -3,3 +3,5 @@ beautifulsoup4>=4.9.0
 selenium>=4.0.0
 webdriver-manager>=4.0.0
 youtube-transcript-api>=0.6.0
+scrapetube>=2.0.0
+pytube>=15.0.0

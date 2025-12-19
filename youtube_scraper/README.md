@@ -115,5 +115,18 @@ For transcript extraction, consider:
 - Third-party services for video transcription
 
 For comments, consider:
-- YouTube Data API v3 for official access
+- YouTube Data API v3 for official access (requires API key)
 - Manual collection for small datasets
+- Free libraries like `scrapetube` (limited functionality)
+- Requests-based approaches (may not work due to API changes)
+
+## Free Libraries Tested
+
+- `youtube-transcript-api`: Works for manual transcripts, issues with auto-generated
+- `scrapetube`: Limited comment functionality
+- `pytube`: No comment support
+- Requests-based: YouTube API changes make it difficult
+
+## Recommendation
+
+For production use, consider using the YouTube Data API v3 with proper authentication for reliable access to comments and transcripts.
