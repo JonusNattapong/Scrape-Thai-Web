@@ -20,6 +20,14 @@ A project to scrape Thai websites for clean text data, including Pantip forum po
   - `install_deps.bat`: Batch file to install dependencies
   - `run_processor.bat`: Batch file to run the processor
 
+- `youtube_scraper/`: Directory for scraping YouTube data
+  - `youtube_comment_scraper.py`: Scrapes comments from YouTube videos
+  - `youtube_content_scraper.py`: Downloads video transcripts/captions
+  - `requirements.txt`: Python dependencies
+  - `install_deps.bat`: Batch file to install dependencies
+  - `run_comment_scraper.bat`: Batch file to run comment scraper
+  - `run_content_scraper.bat`: Batch file to run content scraper
+
 - `run.bat`: Main batch file for interactive menu to run scrapers or install dependencies
 
 ## Installation
@@ -64,6 +72,26 @@ Use the main runner script: `run.bat` for an interactive menu to run scrapers or
    Or use: `wikipedia_scraper/run_processor.bat`
 2. This will download the latest Thai Wikipedia dump, extract and clean articles, saving to `wikipedia_scraper/data/wiki_dataset_clean.jsonl`.
 
+#### Scraping YouTube Comments
+
+1. Run the comment scraper:
+   ```bash
+   cd youtube_scraper
+   python youtube_comment_scraper.py <video_url> [max_comments]
+   ```
+   Or use: `youtube_scraper/run_comment_scraper.bat`
+2. Data will be saved to `youtube_scraper/youtube_data/youtube_comments_{video_id}.jsonl`.
+
+#### Scraping YouTube Video Content
+
+1. Run the content scraper:
+   ```bash
+   cd youtube_scraper
+   python youtube_content_scraper.py <video_url> [language]
+   ```
+   Or use: `youtube_scraper/run_content_scraper.bat`
+2. Transcripts will be saved to `youtube_scraper/youtube_data/youtube_content_{video_id}.jsonl`.
+
 ### Checking Data
 
 - To check Pantip data: `cd pantip_scraper && python check_data.py`
@@ -74,6 +102,8 @@ Both datasets are in JSONL format, with each line being a JSON object.
 
 - Pantip: `{"topic_id": "...", "title": "...", "summary": "...", "comments": ["...", "..."]}`
 - Wiki: `{"title": "...", "content": "..."}`
+- YouTube Comments: `{"author": "...", "comment": "...", "likes": "...", "time": "..."}`
+- YouTube Content: `{"start": 10.5, "duration": 5.2, "text": "..."}`
 
 ## Notes
 
