@@ -32,26 +32,34 @@ class YouTubeContentScraper:
 
     def get_transcript(self, video_id, language='th'):
         """ดึง transcript ของวิดีโอ"""
-        try:
-            # ลองดึง transcript ภาษาไทยก่อน
-            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=[language])
-            print(f"พบ transcript ภาษา {language}")
-        except:
-            try:
-                # ถ้าไม่มีภาษาไทย ลองดึง transcript ภาษาอังกฤษ
-                transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
-                print("พบ transcript ภาษา en (ไม่มีภาษาไทย)")
-            except:
-                # ถ้ายังไม่มี ลองดึง transcript ใดๆ ก็ได้
-                try:
-                    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-                    transcript = transcript_list.find_transcript(['th', 'en']).fetch()
-                    print(f"พบ transcript ภาษา {transcript.language}")
-                except Exception as e:
-                    print(f"ไม่พบ transcript สำหรับวิดีโอนี้: {e}")
-                    return None
+        languages_to_try = [language, 'th-TH', 'th', 'en', 'en-US']
 
-        return transcript
+        for lang in languages_to_try:
+            try:
+                print(f"ลองดึง transcript ภาษา {lang}...")
+                transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=[lang])
+                print(f"พบ transcript ภาษา {lang}")
+                return transcript
+            except Exception as e:
+                print(f"ไม่พบ transcript ภาษา {lang}: {str(e)[:50]}...")
+                continue
+
+        # ลอง list และ fetch โดยตรง
+        try:
+            print("ลอง list transcripts...")
+            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            available_transcripts = list(transcript_list)
+            print(f"พบ {len(available_transcripts)} transcripts")
+            for t in available_transcripts:
+                print(f"  - {t.language} (Generated: {t.is_generated})")
+            if available_transcripts:
+                transcript = available_transcripts[0].fetch()
+                print(f"ดึง transcript ภาษา {available_transcripts[0].language}")
+                return transcript
+        except Exception as e3:
+            print(f"ไม่สามารถ fetch transcript: {str(e3)[:50]}...")
+
+        return None
 
     def clean_transcript_text(self, text):
         """ทำความสะอาดข้อความ transcript"""

@@ -102,9 +102,18 @@ Each line is a JSON object:
 - For comments: Selenium WebDriver (auto-installed)
 - For transcripts: Video must have captions/transcripts available
 
-## Notes
+## Known Issues
 
-- Respect YouTube's Terms of Service
-- Comment scraping may be slow due to page loading
-- Not all videos have transcripts available
-- Transcripts are downloaded in preferred language, fallback to English or any available
+- **Transcript Extraction**: Due to limitations in the `youtube-transcript-api` library, auto-generated transcripts (which are common for Thai YouTube videos) may not be retrievable. This is a known issue with the library and YouTube's API changes.
+- **Comment Scraping**: Requires Chrome browser to be installed on the system. The headless scraping may be detected by YouTube's anti-bot measures.
+
+## Alternatives
+
+For transcript extraction, consider:
+- Using YouTube Data API v3 (requires API key)
+- Manual download from YouTube's caption interface
+- Third-party services for video transcription
+
+For comments, consider:
+- YouTube Data API v3 for official access
+- Manual collection for small datasets

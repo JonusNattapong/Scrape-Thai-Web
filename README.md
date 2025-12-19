@@ -90,7 +90,7 @@ Use the main runner script: `run.bat` for an interactive menu to run scrapers or
    python youtube_content_scraper.py <video_url> [language]
    ```
    Or use: `youtube_scraper/run_content_scraper.bat`
-2. Transcripts will be saved to `youtube_scraper/youtube_data/youtube_content_{video_id}.jsonl`.
+2. **Note**: Due to API limitations, auto-generated transcripts (common for Thai videos) may not be retrievable. Manual transcripts work better.
 
 ### Checking Data
 
